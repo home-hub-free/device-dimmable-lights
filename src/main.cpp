@@ -48,6 +48,15 @@ void setup() {
   digitalWrite(LED_BUILTIN, HIGH);
 }
 
+unsigned long previousMillis = 0;
+unsigned long interval = 30 * 1000;
 void loop() {
-  // put your main code here, to run repeatedly:
+  unsigned long currentMills = millis();
+
+  server.handleClient();
+
+  if (currentMills - previousMillis >= interval) {
+    previousMillis = currentMills;
+    declareDevice();
+  }
 }
