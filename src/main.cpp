@@ -29,9 +29,7 @@ void set() {
 }
 
 void initServer() {
-  // server.on("/", void handleRoot() {});
   server.on("/set", set);
-  // server.on("/set-pwm", setPwm);
   server.begin();
 }
 
@@ -41,8 +39,7 @@ void setup() {
   pinMode(D0, OUTPUT);
   digitalWrite(D0, LOW);
 
-  // server-handler.h
-  wifi_connect();
+  wifiConnect();
   declareDevice();
 
   digitalWrite(LED_BUILTIN, HIGH);
@@ -59,4 +56,4 @@ void loop() {
     previousMillis = currentMills;
     declareDevice();
   }
-}
+} 
