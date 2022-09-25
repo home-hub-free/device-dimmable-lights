@@ -14,6 +14,7 @@ void set() {
       delay(1);
     }
     digitalWrite(D0, HIGH);
+    digitalWrite(LED_BUILTIN, HIGH);
   }
   if (value == "false") {
     while (PWM >= 0) {
@@ -22,6 +23,7 @@ void set() {
       delay(1);
     }
     digitalWrite(D0, LOW);
+    digitalWrite(LED_BUILTIN, LOW);
   }
 
   Serial.println(value);
@@ -42,11 +44,12 @@ void setup() {
   wifiConnect();
   declareDevice();
 
+  initServer();
   digitalWrite(LED_BUILTIN, HIGH);
 }
 
 unsigned long previousMillis = 0;
-unsigned long interval = 30 * 1000;
+unsigned long interval = 10 * 1000;
 void loop() {
   unsigned long currentMills = millis();
 

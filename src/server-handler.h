@@ -14,11 +14,10 @@ WiFiClient wifiClient;
 // Replace this with out own info:
 const char *ssid = "";
 const char *password = "";
+// IP address where the home-hub-free server is running
+String home_server = "http://192.168.1.72:8080";
 
-// IP address where the server is running
-String home_server = "";
-
-const uint32 id = system_get_chip_id();
+const uint32 id = ESP.getChipId();
 
 void wifiConnect() {
   WiFi.persistent(false);
@@ -35,9 +34,11 @@ void wifiConnect() {
 }
 
 void declareDevice() {
-  http.begin(wifiClient, home_server + "/add-device-ip");
+  http.begin(wifiClient, home_server + "/device-declare");
   http.addHeader("Content-Type", "application/json");
-  int httpCode = http.POST("{ \"device\": \"" + String(id) + "\", \"type\": \"dimmable-lights\" }");
+  // String id = String(chipId);
+  String jsonString = "{ \"id\": \"" + String(id) + "\", \"name\": \"light\" }";
+  int httpCode = http.POST(jsonString);
 
   if (httpCode > 0) {
     String result = http.getString();
