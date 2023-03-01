@@ -36,7 +36,7 @@ void wifiConnect() {
 void declareDevice() {
   http.begin(wifiClient, home_server + "/device-declare");
   http.addHeader("Content-Type", "application/json");
-  String jsonString = "{ \"id\": \"" + String(id) + "\", \"name\": \"light\" }";
+  String jsonString = "{ \"id\": \"" + String(id) + "\", \"name\": \"dimmable-light\" }";
   int httpCode = http.POST(jsonString);
 
   if (httpCode > 0) {
