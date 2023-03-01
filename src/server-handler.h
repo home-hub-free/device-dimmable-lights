@@ -15,7 +15,7 @@ WiFiClient wifiClient;
 const char *ssid = "";
 const char *password = "";
 // IP address where the home-hub-free server is running
-String home_server = "http://192.168.1.72:8080";
+String home_server = "http://192.168.1.199:8080";
 
 const uint32 id = ESP.getChipId();
 
@@ -36,8 +36,7 @@ void wifiConnect() {
 void declareDevice() {
   http.begin(wifiClient, home_server + "/device-declare");
   http.addHeader("Content-Type", "application/json");
-  // String id = String(chipId);
-  String jsonString = "{ \"id\": \"" + String(id) + "\", \"name\": \"light\" }";
+  String jsonString = "{ \"id\": \"" + String(id) + "\", \"name\": \"dimmable-light\" }";
   int httpCode = http.POST(jsonString);
 
   if (httpCode > 0) {
