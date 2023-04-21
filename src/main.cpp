@@ -4,24 +4,25 @@
 
 ESP8266WebServer server(80);
 int PWM = 0;
+float frequencyValuePerPercent = 2.55;
 
 void set() {
   String value = server.arg("value");
-  if (value == "true") {
-    while (PWM <= 255) {
-      PWM++;
-      analogWrite(D0, PWM);
-      delay(1);
-    }
+  int percent = value.toInt();
+  int newPWM = frequencyValuePerPercent * percent;
+  int multiplier = newPWM > PWM ? 1 : -1;
+
+  while (PWM != newPWM) {
+    PWM = PWM + multiplier;
+    analogWrite(D0, PWM);
+    delay(1);
+  }
+
+  if (PWM >= 255) {
     digitalWrite(D0, HIGH);
     digitalWrite(LED_BUILTIN, HIGH);
   }
-  if (value == "false") {
-    while (PWM >= 0) {
-      PWM--;
-      analogWrite(D0, PWM);
-      delay(1);
-    }
+  if (PWM <= 0) {
     digitalWrite(D0, LOW);
     digitalWrite(LED_BUILTIN, LOW);
   }
