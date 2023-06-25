@@ -31,8 +31,13 @@ void set() {
   server.send(200, "text/plain", "true");
 }
 
+void test() {
+  server.send(200, "text/plain", "it works brah");
+}
+
 void initServer() {
   server.on("/set", set);
+  server.on("/test", test);
   server.begin();
 }
 
@@ -48,7 +53,7 @@ void setup() {
   initServer();
   digitalWrite(LED_BUILTIN, HIGH);
 }
-
+ 
 unsigned long previousMillis = 0;
 unsigned long interval = 30 * 1000;
 void loop() {
